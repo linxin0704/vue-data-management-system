@@ -28,10 +28,10 @@
             border
             style="width: 100%;background-color: rgb(250, 250, 250)"
           >
-            <el-table-column prop="question" label="问题" width="350"></el-table-column>
-            <el-table-column prop="answer" label="答案" width="450"></el-table-column>
+            <el-table-column prop="question" label="问题" width="400"></el-table-column>
+            <el-table-column prop="answer" label="答案" width="500"></el-table-column>
             <el-table-column prop="reading" label="阅读量" width="200"></el-table-column>
-            <el-table-column label="操作" width="260">
+            <el-table-column label="操作">
               <template slot-scope="scope">
                 <el-button size="mini" @click="handleEdit(scope.row.id, scope.row)">编辑</el-button>
                 <el-button
