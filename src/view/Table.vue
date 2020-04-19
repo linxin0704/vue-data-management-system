@@ -18,12 +18,7 @@
 
       <el-container>
         <el-header style="text-align: left; font-size: 20px;background-color: rgb(250, 250, 250)">
-          <el-input
-            v-model="input"
-            @input="fanDou()"
-            placeholder="请输入内容"
-            style="width:500px;margin-right:500px"
-          ></el-input>
+          <el-input v-model="input" placeholder="请输入搜素内容" style="width:500px;margin-right:500px"></el-input>
           <el-button type="primary" @click="newEdit()">新增</el-button>
         </el-header>
 
@@ -74,8 +69,6 @@
   </div>
 </template>
 
-
-
 <script>
 export default {
   data() {
@@ -93,19 +86,25 @@ export default {
       }
     };
   },
+
+  watch: {
+    input: function(str) {
+      if (typeof str === "string") {
+        if (str.trim().length !== 0) {
+          this.debounce(this.searchData(), 1000);
+        } else {
+        }
+      }
+    }
+  },
+
   mounted() {
     this.getData();
   },
   methods: {
-    fanDou() {
-      console.log(this.input);
-      this.debounce(this.searchData(), 1000);
-    },
-
     debounce(fn, wait) {
       var timeout = null;
       return function() {
-        console.log(this.input);
         if (timeout !== null) clearTimeout(timeout);
         timeout = setTimeout(fn, wait);
       };
