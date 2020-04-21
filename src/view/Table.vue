@@ -20,7 +20,7 @@
           <el-input v-model="input" placeholder="请输入搜素内容" style="width:500px"></el-input>
           <el-button type="primary" @click="clickParent()">新增</el-button>
         </el-header>
-        <v-data class="tableData" :value="this.input" ref="mychild"></v-data>
+        <router-view :value="this.input" ref="mychild"></router-view>
       </el-container>
     </el-container>
   </div>

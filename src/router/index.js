@@ -13,8 +13,18 @@ export default new Router({
         },
         {
             path: '/table',
+            redirect: '/table/mainData',
+        },
+        {
+            path: '/table',
             name: 'table',
-            component: Table
+            component: Table,
+            children: [{
+                path: '/table/mainData',
+                component: () =>
+                    import ('../components/mainData.vue'),
+                meta: { title: '表格数据' }
+            }]
         }
     ]
 })

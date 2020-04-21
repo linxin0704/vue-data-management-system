@@ -1,17 +1,33 @@
 <template>
   <div class="mainData">
     <el-main style="background-color: rgb(240, 242, 245)">
-      <el-table :data="tableData" border style="width: 100%;background-color: rgb(250, 250, 250)">
-        <el-table-column prop="question" label="问题" width="400"></el-table-column>
-        <el-table-column prop="answer" label="答案" width="500"></el-table-column>
-        <el-table-column prop="reading" label="阅读量" width="200"></el-table-column>
-        <el-table-column label="操作" width="180">
+      <el-table
+        :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+        border-
+        style="width: 1250;background-color: rgb(250, 250, 250)"
+      >
+        <el-table-column prop="question" label="问题" min-width="400"></el-table-column>
+        <el-table-column prop="answer" label="答案" min-width="500"></el-table-column>
+        <el-table-column prop="reading" label="阅读量" min-width="200"></el-table-column>
+        <el-table-column label="操作" min-width="150">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.row.id, scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.row.id, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
+      <div class="tabListPage">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page-="currentPage"
+          :page-size="pageSize"
+          :page-sizes="pageSizes"
+          background
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.totalCount"
+        ></el-pagination>
+      </div>
     </el-main>
 
     <el-dialog
@@ -44,9 +60,11 @@ export default {
       tableData: [],
       title: "",
       id: "",
-
+      currentPage: 1,
+      totalCount: 1,
+      pageSize: 10,
+      pageSizes: [10, 20, 30, 40],
       editFormVisible: false, //设置默认弹出框  为false
-
       editForm: {
         question: "",
         answer: "",
@@ -70,6 +88,19 @@ export default {
     this.getData();
   },
   methods: {
+    handleSizeChange(val) {
+      // 改变每页显示的条数
+      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      // 注意：在改变每页显示的条数时，要将页码显示到第一页
+      this.currentPage = 1;
+    },
+    // 显示第几页
+    handleCurrentChange(val) {
+      // 改变默认的页数
+      this.currentPage = val;
+      console.log(`当前页: ${val}`);
+    },
     debounce(fn, wait) {
       var timeout = null;
       return function() {
@@ -204,6 +235,7 @@ export default {
       }).then(r => {
         console.log(r.data.data);
         this.tableData = r.data.data;
+        this.totalCount = r.data.data.length;
       });
     }
   }
