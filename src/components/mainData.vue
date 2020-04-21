@@ -1,34 +1,40 @@
 <template>
   <div class="mainData">
-    <el-main style="background-color: rgb(240, 242, 245)">
-      <el-table
-        :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-        border-
-        style="width: 1250;background-color: rgb(250, 250, 250)"
-      >
-        <el-table-column prop="question" label="问题" min-width="400"></el-table-column>
-        <el-table-column prop="answer" label="答案" min-width="500"></el-table-column>
-        <el-table-column prop="reading" label="阅读量" min-width="200"></el-table-column>
-        <el-table-column label="操作" min-width="150">
-          <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.row.id, scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.row.id, scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div class="tabListPage">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page-="currentPage"
-          :page-size="pageSize"
-          :page-sizes="pageSizes"
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="this.totalCount"
-        ></el-pagination>
-      </div>
-    </el-main>
+    <el-container>
+      <el-header style="text-align: left; font-size: 20px;background-color: rgb(250, 250, 250)">
+        <el-input v-model="input" placeholder="请输入搜素内容" style="width:500px; margin-right:700px"></el-input>
+        <el-button type="primary" @click="newEdit()">新增</el-button>
+      </el-header>
+      <el-main style="background-color: rgb(240, 242, 245)">
+        <el-table
+          :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+          border-
+          style="width: 1250;background-color: rgb(250, 250, 250)"
+        >
+          <el-table-column prop="question" label="问题" min-width="400" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="answer" label="答案" min-width="500" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="reading" label="阅读量" min-width="200"></el-table-column>
+          <el-table-column label="操作" min-width="150">
+            <template slot-scope="scope">
+              <el-button size="mini" @click="handleEdit(scope.row.id, scope.row)">编辑</el-button>
+              <el-button size="mini" type="danger" @click="handleDelete(scope.row.id, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="tabListPage">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page-="currentPage"
+            :page-size="pageSize"
+            :page-sizes="pageSizes"
+            background
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="this.totalCount"
+          ></el-pagination>
+        </div>
+      </el-main>
+    </el-container>
 
     <el-dialog
       :title="this.title"
@@ -60,6 +66,7 @@ export default {
       tableData: [],
       title: "",
       id: "",
+      input: "",
       currentPage: 1,
       totalCount: 1,
       pageSize: 10,
@@ -74,7 +81,7 @@ export default {
   },
 
   watch: {
-    value(str) {
+    input(str) {
       if (typeof str === "string") {
         if (str.trim().length !== 0) {
           this.debounce(this.searchData(), 1000);
@@ -114,7 +121,7 @@ export default {
         method: "post",
         url: "https://www.alingyi.com:23666/QAList",
         data: {
-          content: this.value,
+          content: this.input,
           university: "fzu"
         }
       }).then(r => {
