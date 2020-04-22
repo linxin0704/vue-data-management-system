@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import QA from '../qa/index.vue'
 import Login from '@/view/Login'
 import Table from '@/view/Table'
 Vue.use(Router)
@@ -21,9 +21,9 @@ export default new Router({
             component: Table,
             children: [{
                 path: '/table/mainData',
-                component: () =>
-                    import ('../qa/index.vue'),
-                meta: { title: '表格数据' }
+                component: {
+                    QA
+                }
             }]
         }
     ]
