@@ -22,7 +22,7 @@ export default new Router({
             children: [{
                 path: '/table/mainData',
                 component: () =>
-                    import ('../components/mainData.vue'),
+                    import ('../qa/index.vue'),
                 meta: { title: '表格数据' }
             }]
         }

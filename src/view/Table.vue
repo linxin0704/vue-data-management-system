@@ -18,7 +18,6 @@
             </el-submenu>
           </el-menu>
         </el-aside>
-
         <router-view></router-view>
       </el-container>
     </el-container>
@@ -26,16 +25,13 @@
 </template>
 
 <script>
-import vData from "../components/mainData";
 export default {
   data() {
     return {
       input: ""
     };
   },
-  components: {
-    vData
-  },
+
   methods: {}
 };
 </script>
