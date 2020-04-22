@@ -55,12 +55,11 @@ Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;
 
 /* eslint-disable no-new */
-const vm = new Vue({
+new Vue({
     el: '#app',
     router,
     components: {
         App
     },
     template: '<App/>'
-});
-export default vm
+})

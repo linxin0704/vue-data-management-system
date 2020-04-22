@@ -21,9 +21,8 @@ export default new Router({
             component: Table,
             children: [{
                 path: '/table/mainData',
-                component: {
-                    QA
-                }
+                component: QA
+
             }]
         }
     ]
