@@ -55,6 +55,7 @@ Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;
 
 /* eslint-disable no-new */
+
 new Vue({
     el: '#app',
     router,

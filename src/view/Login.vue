@@ -19,6 +19,7 @@
   </div>
 </template>
 <script>
+import { loginData } from "../until./api";
 export default {
   data() {
     return {
@@ -30,16 +31,13 @@ export default {
     login(uname) {
       console.log(uname);
       let self = this;
-      this.$http({
-        method: "post",
-        url: "https://www.alingyi.com:23666/login",
-        data: {
-          username: this.uname,
-          password: this.pwd
-        }
-      }).then(r => {
-        console.log(r.data.code);
-        if (r.data.code === 200) {
+      let data = {
+        username: this.uname,
+        password: this.pwd
+      };
+      loginData(data).then(r => {
+        console.log(r.code);
+        if (r.code === 200) {
           self.$router.push({ path: "/table" });
         } else {
           self.$message.error("账号或密码错误，请重新填写");

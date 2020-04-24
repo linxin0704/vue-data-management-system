@@ -40,6 +40,7 @@
 </template>
 <script>
 import vDialog from "./formDialog";
+import { removeBackgroundData, getBackgroundData } from "../until./api";
 export default {
   props: ["value"],
   data() {
@@ -99,17 +100,14 @@ export default {
     },
 
     searchData() {
-      this.$http({
-        method: "post",
-        url: "https://www.alingyi.com:23666/QAList",
-        data: {
-          content: this.input,
-          university: "fzu"
-        }
-      }).then(r => {
-        console.log(r.data.data);
-        this.tableData = r.data.data;
-        if (r.data.code === 200) {
+      let data = {
+        content: this.input,
+        university: "fzu"
+      };
+      getBackgroundData(data).then(r => {
+        console.log(r.data);
+        this.tableData = r.data;
+        if (r.code === 200) {
           this.$message({
             type: "success",
             message: "搜索成功!"
@@ -135,14 +133,11 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.$http({
-            method: "post",
-            url: "https://www.alingyi.com:23666/QAList/remove",
-            data: {
-              id: id,
-              university: "fzu"
-            }
-          }).then(r => {
+          let data = {
+            id: id,
+            university: "fzu"
+          };
+          removeBackgroundData(data).then(r => {
             this.getData();
             this.$message({
               type: "success",
@@ -159,18 +154,14 @@ export default {
     },
 
     getData() {
-      let self = this;
-      this.$http({
-        method: "post",
-        url: "https://www.alingyi.com:23666/QAList",
-        data: {
-          content: "",
-          university: "fzu"
-        }
-      }).then(r => {
-        console.log(r.data.data);
-        this.tableData = r.data.data;
-        this.totalCount = r.data.data.length;
+      let data = {
+        content: "",
+        university: "fzu"
+      };
+      getBackgroundData(data).then(r => {
+        console.log(r.data);
+        this.tableData = r.data;
+        this.totalCount = r.data.length;
       });
     }
   }

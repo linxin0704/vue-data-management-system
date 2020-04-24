@@ -24,6 +24,11 @@
 </template>
 
 <script>
+import {
+  editBackgroundData,
+  addBackgroundData,
+  getBackgroundData
+} from "../until./api";
 export default {
   data() {
     return {
@@ -52,18 +57,15 @@ export default {
     },
     ConfirmOperation() {
       if (this.title === "新增") {
-        this.$http({
-          method: "post",
-          url: "https://www.alingyi.com:23666/QAList/insert",
-          data: {
-            question: this.editForm.question,
-            answer: this.editForm.answer,
-            university: "fzu"
-          }
-        }).then(r => {
+        let data = {
+          question: this.editForm.question,
+          answer: this.editForm.answer,
+          university: "fzu"
+        };
+        addBackgroundData(data).then(r => {
           this.getData();
           this.editFormVisible = false;
-          if (r.data.code === 200) {
+          if (r.code === 200) {
             this.$message({
               type: "success",
               message: "新增成功!"
@@ -82,19 +84,16 @@ export default {
       this.title = "编辑";
     },
     editData() {
-      this.$http({
-        method: "post",
-        url: "https://www.alingyi.com:23666/QAList/update",
-        data: {
-          question: this.editForm.question,
-          answer: this.editForm.answer,
-          id: this.id,
-          university: "fzu"
-        }
-      }).then(r => {
+      let data = {
+        question: this.editForm.question,
+        answer: this.editForm.answer,
+        id: this.id,
+        university: "fzu"
+      };
+      editBackgroundData(data).then(r => {
         this.getData();
         this.editFormVisible = false;
-        if (r.data.code === 200) {
+        if (r.code === 200) {
           this.$message({
             type: "success",
             message: "编辑成功!"
@@ -103,18 +102,14 @@ export default {
       });
     },
     getData() {
-      let self = this;
-      this.$http({
-        method: "post",
-        url: "https://www.alingyi.com:23666/QAList",
-        data: {
-          content: "",
-          university: "fzu"
-        }
-      }).then(r => {
+      let data = {
+        content: "",
+        university: "fzu"
+      };
+      getBackgroundData(data).then(r => {
         console.log(r.data.data);
-        this.tableData = r.data.data;
-        this.totalCount = r.data.data.length;
+        this.tableData = r.data;
+        this.totalCount = r.data.length;
         this.$emit("return", this.tableData, this.totalCount);
       });
     }
