@@ -40,7 +40,7 @@
 </template>
 <script>
 import vDialog from "./formDialog";
-import { removeBackgroundData, getBackgroundData } from "../until./api";
+import { removeBackgroundData, getBackgroundData } from "../util/api";
 export default {
   props: ["value"],
   data() {

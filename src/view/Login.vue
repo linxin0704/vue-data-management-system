@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import { loginData } from "../until./api";
+import { loginData } from "../util/api";
 export default {
   data() {
     return {

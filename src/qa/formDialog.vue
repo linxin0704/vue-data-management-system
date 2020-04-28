@@ -28,7 +28,7 @@ import {
   editBackgroundData,
   addBackgroundData,
   getBackgroundData
-} from "../until./api";
+} from "../util/api";
 export default {
   data() {
     return {
