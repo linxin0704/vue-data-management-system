@@ -3,7 +3,7 @@
     <el-container>
       <el-header style="text-align: left; font-size: 20px;background-color: rgb(250, 250, 250)">
         <el-input v-model="input" placeholder="请输入搜素内容" style="width:500px; margin-right:700px"></el-input>
-        <el-button type="primary" @click="newEdit()">新增</el-button>
+        <el-button type="primary" @click="newEdit()">新增未覆盖提问</el-button>
       </el-header>
       <el-main style="background-color: rgb(240, 242, 245)">
         <el-table
